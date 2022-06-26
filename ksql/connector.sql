@@ -7,9 +7,11 @@ CREATE SOURCE CONNECTOR product_connector WITH (
     'database.dbname' = 'postgres',
     'database.server.name' = 'ecommerce',
     'table.whitelist' = 'public.color,public.product,public.variant',
-    'transforms' = 'unwrap',
+    'transforms' = 'unwrap,extractkey',
     'transforms.unwrap.type' = 'io.debezium.transforms.ExtractNewRecordState',
     'transforms.unwrap.drop.tombstones' = 'false',
     'transforms.unwrap.delete.handling.mode' = 'rewrite',
+    'transforms.extractkey.type'= 'org.apache.kafka.connect.transforms.ExtractField$Key',
+    'transforms.extractkey.field'= 'id',
     'snapshot.mode' = 'always'
 );
